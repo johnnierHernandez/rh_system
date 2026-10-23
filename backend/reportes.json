@@ -1,0 +1,358 @@
+{
+  "areas": [
+    {
+      "id": 1,
+      "nombre": "Rectorado",
+      "trabajadores": 17,
+      "docentes": 7
+    },
+    {
+      "id": 2,
+      "nombre": "Vicerrector A (Vicerrectoría Docente)",
+      "trabajadores": 10,
+      "docentes": 8
+    },
+    {
+      "id": 3,
+      "nombre": "Vicerrector B (Vicerrectoría de Investigación y Postgrado)",
+      "trabajadores": 37,
+      "docentes": 17
+    },
+    {
+      "id": 4,
+      "nombre": "Vicerrector D (Vicerrectoría Económica)",
+      "trabajadores": 6,
+      "docentes": 4
+    },
+    {
+      "id": 5,
+      "nombre": "Dirección General de Servicios Generales",
+      "trabajadores": 0,
+      "docentes": 0
+    },
+    {
+      "id": 6,
+      "nombre": "Dirección General de Información, Comunicación e Informatización",
+      "trabajadores": 8,
+      "docentes": 3
+    },
+    {
+      "id": 7,
+      "nombre": "Vicerrector C (Vicerrectoría de Extensión Universitaria)",
+      "trabajadores": 6,
+      "docentes": 5
+    },
+    {
+      "id": 8,
+      "nombre": "Dirección de Recursos Humanos",
+      "trabajadores": 13,
+      "docentes": 1
+    },
+    {
+      "id": 9,
+      "nombre": "Dirección de Relaciones Internacionales",
+      "trabajadores": 9,
+      "docentes": 3
+    },
+    {
+      "id": 10,
+      "nombre": "Dirección de Alimentación",
+      "trabajadores": 6,
+      "docentes": 0
+    },
+    {
+      "id": 13,
+      "nombre": "Dirección de Planificación(Economía)",
+      "trabajadores": 4,
+      "docentes": 1
+    },
+    {
+      "id": 14,
+      "nombre": "Dirección de Contabilidad y Finanzas",
+      "trabajadores": 10,
+      "docentes": 1
+    },
+    {
+      "id": 16,
+      "nombre": "ICB. Dirección de Marxismo-Leninismo",
+      "trabajadores": 32,
+      "docentes": 29
+    },
+    {
+      "id": 17,
+      "nombre": "Dirección de Residencia Estudiantil",
+      "trabajadores": 26,
+      "docentes": 1
+    },
+    {
+      "id": 18,
+      "nombre": "Dirección de Extensión Universitaria",
+      "trabajadores": 20,
+      "docentes": 13
+    },
+    {
+      "id": 19,
+      "nombre": "Dirección de Alojamiento",
+      "trabajadores": 15,
+      "docentes": 1
+    },
+    {
+      "id": 20,
+      "nombre": "Dirección de Información Científico-Técnica",
+      "trabajadores": 16,
+      "docentes": 0
+    },
+    {
+      "id": 21,
+      "nombre": "Dirección de Servicios TIC",
+      "trabajadores": 15,
+      "docentes": 6
+    },
+    {
+      "id": 22,
+      "nombre": "Dirección de Educacion Fisica Deporte y Recreacion",
+      "trabajadores": 22,
+      "docentes": 19
+    },
+    {
+      "id": 23,
+      "nombre": "Dirección de Defensa y Seguridad",
+      "trabajadores": 3,
+      "docentes": 0
+    },
+    {
+      "id": 26,
+      "nombre": "Centro de Referencia para la Educación de Avanzada",
+      "trabajadores": 11,
+      "docentes": 8
+    },
+    {
+      "id": 28,
+      "nombre": "Facultad de Ingeniería Informática",
+      "trabajadores": 53,
+      "docentes": 29
+    },
+    {
+      "id": 29,
+      "nombre": "Facultad de Arquitectura",
+      "trabajadores": 30,
+      "docentes": 27
+    },
+    {
+      "id": 30,
+      "nombre": "Facultad de Ingeniería Civil",
+      "trabajadores": 26,
+      "docentes": 19
+    },
+    {
+      "id": 31,
+      "nombre": "Facultad de Ingeniería Eléctrica",
+      "trabajadores": 52,
+      "docentes": 36
+    },
+    {
+      "id": 32,
+      "nombre": "Facultad de Ingeniería Industrial",
+      "trabajadores": 60,
+      "docentes": 48
+    },
+    {
+      "id": 33,
+      "nombre": "Facultad de Ingeniería Mecánica",
+      "trabajadores": 81,
+      "docentes": 61
+    },
+    {
+      "id": 34,
+      "nombre": "Facultad de Ingeniería Química",
+      "trabajadores": 55,
+      "docentes": 46
+    },
+    {
+      "id": 35,
+      "nombre": "Secretaría General",
+      "trabajadores": 4,
+      "docentes": 0
+    },
+    {
+      "id": 38,
+      "nombre": "Centros de Estudios CITI",
+      "trabajadores": 1,
+      "docentes": 1
+    },
+    {
+      "id": 41,
+      "nombre": "Dirección de Servicios a Equipos Informáticos",
+      "trabajadores": 3,
+      "docentes": 0
+    },
+    {
+      "id": 42,
+      "nombre": "Dirección de Cuadros",
+      "trabajadores": 2,
+      "docentes": 1
+    },
+    {
+      "id": 43,
+      "nombre": "Dirección de Comunicacion Institucional",
+      "trabajadores": 10,
+      "docentes": 1
+    },
+    {
+      "id": 47,
+      "nombre": "Filial de 10 Octubre",
+      "trabajadores": 39,
+      "docentes": 32
+    },
+    {
+      "id": 51,
+      "nombre": "CIH",
+      "trabajadores": 38,
+      "docentes": 35
+    },
+    {
+      "id": 52,
+      "nombre": "CIME",
+      "trabajadores": 7,
+      "docentes": 5
+    },
+    {
+      "id": 53,
+      "nombre": "ICB. Departamento de Física",
+      "trabajadores": 0,
+      "docentes": 0
+    },
+    {
+      "id": 54,
+      "nombre": "CECAT",
+      "trabajadores": 54,
+      "docentes": 47
+    },
+    {
+      "id": 55,
+      "nombre": "CETER",
+      "trabajadores": 16,
+      "docentes": 14
+    },
+    {
+      "id": 57,
+      "nombre": "ICB. Centro de Estudios de Matemáticos",
+      "trabajadores": 59,
+      "docentes": 53
+    },
+    {
+      "id": 58,
+      "nombre": "Dirección de Calidad",
+      "trabajadores": 2,
+      "docentes": 2
+    },
+    {
+      "id": 90,
+      "nombre": "ICB. Departamento de Enseñanza Militar",
+      "trabajadores": 11,
+      "docentes": 10
+    },
+    {
+      "id": 102,
+      "nombre": "Departamento de Gastronomía",
+      "trabajadores": 0,
+      "docentes": 0
+    },
+    {
+      "id": 103,
+      "nombre": "Comedor de Estudiantes",
+      "trabajadores": 43,
+      "docentes": 0
+    },
+    {
+      "id": 104,
+      "nombre": "Comedor Cipel-Cime",
+      "trabajadores": 7,
+      "docentes": 0
+    },
+    {
+      "id": 105,
+      "nombre": "Comedor Trabajadores",
+      "trabajadores": 14,
+      "docentes": 0
+    },
+    {
+      "id": 106,
+      "nombre": "Facultad de Automática y Biomédica",
+      "trabajadores": 51,
+      "docentes": 44
+    },
+    {
+      "id": 107,
+      "nombre": "Facultad de Telecomunicaciones y Electrónica",
+      "trabajadores": 46,
+      "docentes": 38
+    },
+    {
+      "id": 109,
+      "nombre": "Instituto de  Ciencias Básicas",
+      "trabajadores": 14,
+      "docentes": 11
+    },
+    {
+      "id": 111,
+      "nombre": "ICB.Departamento Química Básica",
+      "trabajadores": 0,
+      "docentes": 0
+    },
+    {
+      "id": 112,
+      "nombre": "ICB. Departamento de Gráfica",
+      "trabajadores": 0,
+      "docentes": 0
+    },
+    {
+      "id": 113,
+      "nombre": "ICB. Centro de Idioma",
+      "trabajadores": 26,
+      "docentes": 24
+    },
+    {
+      "id": 114,
+      "nombre": "Grupo de Capacitación Continua de la Comunidad Universitaria",
+      "trabajadores": 3,
+      "docentes": 0
+    },
+    {
+      "id": 115,
+      "nombre": "Dirección General de Logística",
+      "trabajadores": 3,
+      "docentes": 1
+    },
+    {
+      "id": 116,
+      "nombre": "Abastecimiento Técnico Material",
+      "trabajadores": 15,
+      "docentes": 1
+    },
+    {
+      "id": 117,
+      "nombre": "Dirección Energética",
+      "trabajadores": 1,
+      "docentes": 0
+    },
+    {
+      "id": 118,
+      "nombre": "Dirección Infraestructura",
+      "trabajadores": 19,
+      "docentes": 0
+    },
+    {
+      "id": 119,
+      "nombre": "Dirección Transporte",
+      "trabajadores": 25,
+      "docentes": 0
+    },
+    {
+      "id": 120,
+      "nombre": "Dirección Servicios  Generales",
+      "trabajadores": 1,
+      "docentes": 1
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+# Dependencias
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Builds
+.next/
+out/
+build/
+dist/
+*.tsbuildinfo
+next-env.d.ts
+
+# Entorno y secretos
+.env
+.env.*
+!.env.example
+
+# Copias y artefactos
+*.bak
+*.bak.*
+*.bak-*
+*.bak_*
+*.tar.gz
+*.tgz
+*.b64
+*.log
+
+# Respaldos de bases de datos (datos personales, no versionar)
+ASSETS_RH_backup_*
+*.sql.gz
+*.dump
+
+# Hojas de cálculo locales
+*.xlsx
+*.xls
+
+# Editores / sistema
+.idea/
+.vscode/
+.DS_Store

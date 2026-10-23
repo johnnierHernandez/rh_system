@@ -1,0 +1,11 @@
+[Unit]
+Description=DRHnet Next.js
+After=network.target
+[Service]
+Type=simple
+WorkingDirectory=/opt/rh_app/admin
+ExecStart=/usr/bin/npx next start -p 3000
+Restart=always
+User=root
+[Install]
+WantedBy=multi-user.target

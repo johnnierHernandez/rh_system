@@ -1,0 +1,673 @@
+{
+  "categoria": "Modelos y planillas",
+  "descripcion": "Documentos de modelos, planillas, condecoraciones y normativas de la Dirección de Recursos Humanos.",
+  "total": 82,
+  "por_tipo": {
+    "doc": 27,
+    "docx": 3,
+    "pdf": 44,
+    "ppt": 1,
+    "pptx": 1,
+    "rar": 4,
+    "xls": 1,
+    "xlsx": 1
+  },
+  "items": [
+    {
+      "id": 300,
+      "ext": "pdf",
+      "nombre": "1ra_Modificación_al_Convenio_Colectivo_de_Trabajo_Febrero_de_2015",
+      "archivo": "300_1ra_Modificación_al_Convenio_Colectivo_de_Trabajo_Febrero_de_2015.pdf",
+      "url": "/docs/300_1ra_Modificación_al_Convenio_Colectivo_de_Trabajo_Febrero_de_2015.pdf",
+      "tam": 291203
+    },
+    {
+      "id": 39,
+      "ext": "pdf",
+      "nombre": "Acta de entrega de Expediente Laboral",
+      "archivo": "039_Acta de entrega de Expediente Laboral.pdf",
+      "url": "/docs/039_Acta de entrega de Expediente Laboral.pdf",
+      "tam": 48158
+    },
+    {
+      "id": 301,
+      "ext": "doc",
+      "nombre": "Acta_de_Constitución_Brigada_contra_incendios_2015",
+      "archivo": "301_Acta_de_Constitución_Brigada_contra_incendios_2015.doc",
+      "url": "/docs/301_Acta_de_Constitución_Brigada_contra_incendios_2015.doc",
+      "tam": 82432
+    },
+    {
+      "id": 259,
+      "ext": "pdf",
+      "nombre": "Anexo 3 MODELO DE SOLICITUD DE EMPLEO",
+      "archivo": "259_Anexo 3 MODELO DE SOLICITUD DE EMPLEO.pdf",
+      "url": "/docs/259_Anexo 3 MODELO DE SOLICITUD DE EMPLEO.pdf",
+      "tam": 223549
+    },
+    {
+      "id": 266,
+      "ext": "pdf",
+      "nombre": "Anexo 8 Modelo de Certificación de Liquidación de Deudas",
+      "archivo": "266_Anexo 8 Modelo de Certificación de Liquidación de Deudas.pdf",
+      "url": "/docs/266_Anexo 8 Modelo de Certificación de Liquidación de Deudas.pdf",
+      "tam": 24173
+    },
+    {
+      "id": 260,
+      "ext": "pdf",
+      "nombre": "Anexo _11 _Manual_de_Seguridad_y_Salud_en_el_Trabajo_revision_definitiva2011",
+      "archivo": "260_Anexo _11 _Manual_de_Seguridad_y_Salud_en_el_Trabajo_revision_definitiva2011.pdf",
+      "url": "/docs/260_Anexo _11 _Manual_de_Seguridad_y_Salud_en_el_Trabajo_revision_definitiva2011.pdf",
+      "tam": 1549202
+    },
+    {
+      "id": 326,
+      "ext": "pdf",
+      "nombre": "ANEXO AL CÓDIGO DE ÉTICA DE LA UNIVERSIDAD TECNOLÓGICA DE LA HABANA",
+      "archivo": "326_ANEXO AL CÓDIGO DE ÉTICA DE LA UNIVERSIDAD TECNOLÓGICA DE LA HABANA.pdf",
+      "url": "/docs/326_ANEXO AL CÓDIGO DE ÉTICA DE LA UNIVERSIDAD TECNOLÓGICA DE LA HABANA.pdf",
+      "tam": 135370
+    },
+    {
+      "id": 268,
+      "ext": "pdf",
+      "nombre": "ANEXO_10_ACTA _DE_RESPONSABILIDAD _MATERIAL",
+      "archivo": "268_ANEXO_10_ACTA _DE_RESPONSABILIDAD _MATERIAL.pdf",
+      "url": "/docs/268_ANEXO_10_ACTA _DE_RESPONSABILIDAD _MATERIAL.pdf",
+      "tam": 93554
+    },
+    {
+      "id": 269,
+      "ext": "pdf",
+      "nombre": "Anexo_12_Necesidades _de_los_equipos_de_protección_para_cada_cargo",
+      "archivo": "269_Anexo_12_Necesidades _de_los_equipos_de_protección_para_cada_cargo.pdf",
+      "url": "/docs/269_Anexo_12_Necesidades _de_los_equipos_de_protección_para_cada_cargo.pdf",
+      "tam": 186086
+    },
+    {
+      "id": 270,
+      "ext": "pdf",
+      "nombre": "Anexo_13_Periodicidad_de_la_instrucción_periódica_en_materia_de_seguridad_y_salud_del_trabajo",
+      "archivo": "270_Anexo_13_Periodicidad_de_la_instrucción_periódica_en_materia_de_seguridad_y_salud_del_trabajo.pdf",
+      "url": "/docs/270_Anexo_13_Periodicidad_de_la_instrucción_periódica_en_materia_de_seguridad_y_salud_del_trabajo.pdf",
+      "tam": 30312
+    },
+    {
+      "id": 271,
+      "ext": "pdf",
+      "nombre": "Anexo_14_Modelo_de_evaluación_del_desempeño",
+      "archivo": "271_Anexo_14_Modelo_de_evaluación_del_desempeño.pdf",
+      "url": "/docs/271_Anexo_14_Modelo_de_evaluación_del_desempeño.pdf",
+      "tam": 68519
+    },
+    {
+      "id": 272,
+      "ext": "pdf",
+      "nombre": "Anexo_15_Modelos_de_plan_de_resultado",
+      "archivo": "272_Anexo_15_Modelos_de_plan_de_resultado.pdf",
+      "url": "/docs/272_Anexo_15_Modelos_de_plan_de_resultado.pdf",
+      "tam": 68997
+    },
+    {
+      "id": 273,
+      "ext": "pdf",
+      "nombre": "Anexo_16_Plan_de_preparación_de recién graduados",
+      "archivo": "273_Anexo_16_Plan_de_preparación_de recién graduados.pdf",
+      "url": "/docs/273_Anexo_16_Plan_de_preparación_de recién graduados.pdf",
+      "tam": 61384
+    },
+    {
+      "id": 261,
+      "ext": "pdf",
+      "nombre": "Anexo_17_Evaluación_parcial_del_Plan_de_preparación_de_recién_graduados",
+      "archivo": "261_Anexo_17_Evaluación_parcial_del_Plan_de_preparación_de_recién_graduados.pdf",
+      "url": "/docs/261_Anexo_17_Evaluación_parcial_del_Plan_de_preparación_de_recién_graduados.pdf",
+      "tam": 46181
+    },
+    {
+      "id": 274,
+      "ext": "pdf",
+      "nombre": "Anexo_18_Evaluación_final_del_Plan_de_preparación_de_recién_graduados",
+      "archivo": "274_Anexo_18_Evaluación_final_del_Plan_de_preparación_de_recién_graduados.pdf",
+      "url": "/docs/274_Anexo_18_Evaluación_final_del_Plan_de_preparación_de_recién_graduados.pdf",
+      "tam": 192574
+    },
+    {
+      "id": 262,
+      "ext": "pdf",
+      "nombre": "Anexo_4_MODELO_DE_SOLICITUD_DE_PLURIEMPLEO",
+      "archivo": "262_Anexo_4_MODELO_DE_SOLICITUD_DE_PLURIEMPLEO.pdf",
+      "url": "/docs/262_Anexo_4_MODELO_DE_SOLICITUD_DE_PLURIEMPLEO.pdf",
+      "tam": 178055
+    },
+    {
+      "id": 263,
+      "ext": "pdf",
+      "nombre": "Anexo_5_MODELO_DE_PROPUESTA_DE_MOVIMIENTO",
+      "archivo": "263_Anexo_5_MODELO_DE_PROPUESTA_DE_MOVIMIENTO.pdf",
+      "url": "/docs/263_Anexo_5_MODELO_DE_PROPUESTA_DE_MOVIMIENTO.pdf",
+      "tam": 184669
+    },
+    {
+      "id": 264,
+      "ext": "pdf",
+      "nombre": "Anexo_6_MODELO_DE_SOLICITUD_DE_CONTRATACIÓN_DE_PROFESORES_A _TIEMPO_DETERMINADO",
+      "archivo": "264_Anexo_6_MODELO_DE_SOLICITUD_DE_CONTRATACIÓN_DE_PROFESORES_A _TIEMPO_DETERMINADO.pdf",
+      "url": "/docs/264_Anexo_6_MODELO_DE_SOLICITUD_DE_CONTRATACIÓN_DE_PROFESORES_A _TIEMPO_DETERMINADO.pdf",
+      "tam": 237649
+    },
+    {
+      "id": 265,
+      "ext": "pdf",
+      "nombre": "Anexo_7_MODELO_DE_CARTA_DE_AUTORIZACION_DE_CENTRO_DE_TRABAJO",
+      "archivo": "265_Anexo_7_MODELO_DE_CARTA_DE_AUTORIZACION_DE_CENTRO_DE_TRABAJO.pdf",
+      "url": "/docs/265_Anexo_7_MODELO_DE_CARTA_DE_AUTORIZACION_DE_CENTRO_DE_TRABAJO.pdf",
+      "tam": 118733
+    },
+    {
+      "id": 267,
+      "ext": "pdf",
+      "nombre": "Anexo_9_Listado_de_cargos_por_designacion",
+      "archivo": "267_Anexo_9_Listado_de_cargos_por_designacion.pdf",
+      "url": "/docs/267_Anexo_9_Listado_de_cargos_por_designacion.pdf",
+      "tam": 112764
+    },
+    {
+      "id": 29,
+      "ext": "pdf",
+      "nombre": "Análisis Periódico de Asistencia",
+      "archivo": "029_Análisis Periódico de Asistencia.pdf",
+      "url": "/docs/029_Análisis Periódico de Asistencia.pdf",
+      "tam": 21753
+    },
+    {
+      "id": 283,
+      "ext": "doc",
+      "nombre": "CARLOS J FINLAY ISPJAE hasta 2015",
+      "archivo": "283_CARLOS_J_FINLAY_ISPJAE_hasta_2015.doc",
+      "url": "/docs/283_CARLOS_J_FINLAY_ISPJAE_hasta_2015.doc",
+      "tam": 51200
+    },
+    {
+      "id": 26,
+      "ext": "pdf",
+      "nombre": "Carta de Adjuntos",
+      "archivo": "026_Carta de Adjuntos.pdf",
+      "url": "/docs/026_Carta de Adjuntos.pdf",
+      "tam": 17349
+    },
+    {
+      "id": 139,
+      "ext": "pdf",
+      "nombre": "Certificación de años de servicio y salarios devengados",
+      "archivo": "139_Certificación de años de servicio y salarios devengados.pdf",
+      "url": "/docs/139_Certificación de años de servicio y salarios devengados.pdf",
+      "tam": 9127
+    },
+    {
+      "id": 184,
+      "ext": "doc",
+      "nombre": "Certificado de Evaluación de Seguridad y Salud de trabajadores de nuevo ingreso docentes y no docent",
+      "archivo": "184_Certificado de Evaluación de Seguridad y Salud de trabajadores de nuevo ingreso docentes y no docent.doc",
+      "url": "/docs/184_Certificado de Evaluación de Seguridad y Salud de trabajadores de nuevo ingreso docentes y no docent.doc",
+      "tam": 20992
+    },
+    {
+      "id": 327,
+      "ext": "rar",
+      "nombre": "Clases de defensa civil",
+      "archivo": "327_Clases de defensa civil.rar",
+      "url": "/docs/327_Clases de defensa civil.rar",
+      "tam": 9287481
+    },
+    {
+      "id": 253,
+      "ext": "pdf",
+      "nombre": "Codigo de Etica",
+      "archivo": "253_Codigo de Etica.pdf",
+      "url": "/docs/253_Codigo de Etica.pdf",
+      "tam": 281875
+    },
+    {
+      "id": 323,
+      "ext": "doc",
+      "nombre": "Contenido de carta de solicitud de tribunal",
+      "archivo": "323_Contenido de carta de solicitud de tribunal.doc",
+      "url": "/docs/323_Contenido de carta de solicitud de tribunal.doc",
+      "tam": 115200
+    },
+    {
+      "id": 275,
+      "ext": "pdf",
+      "nombre": "Convenio_Colectivo_de_Trabajo_Definitivo_12_de_Dic",
+      "archivo": "275_Convenio_Colectivo_de_Trabajo_Definitivo_12_de_Dic.pdf",
+      "url": "/docs/275_Convenio_Colectivo_de_Trabajo_Definitivo_12_de_Dic.pdf",
+      "tam": 398686
+    },
+    {
+      "id": 276,
+      "ext": "doc",
+      "nombre": "CRONOGRAMA DE PAGO 2018",
+      "archivo": "276_CRONOGRAMA DE PAGO 2018.doc",
+      "url": "/docs/276_CRONOGRAMA DE PAGO 2018.doc",
+      "tam": 51712
+    },
+    {
+      "id": 34,
+      "ext": "pdf",
+      "nombre": "Declaración Jurada Material Nuclear",
+      "archivo": "034_Declaración Jurada Material Nuclear.pdf",
+      "url": "/docs/034_Declaración Jurada Material Nuclear.pdf",
+      "tam": 29967
+    },
+    {
+      "id": 35,
+      "ext": "pdf",
+      "nombre": "Declaración Jurada Sustancias Químicas Tóxicas",
+      "archivo": "035_Declaración Jurada Sustancias Químicas Tóxicas.pdf",
+      "url": "/docs/035_Declaración Jurada Sustancias Químicas Tóxicas.pdf",
+      "tam": 53910
+    },
+    {
+      "id": 330,
+      "ext": "pdf",
+      "nombre": "Decreto 104",
+      "archivo": "330_Decreto_104.pdf",
+      "url": "/docs/330_Decreto_104.pdf",
+      "tam": 4703439
+    },
+    {
+      "id": 329,
+      "ext": "pdf",
+      "nombre": "Decreto 146",
+      "archivo": "329_Decreto_146.pdf",
+      "url": "/docs/329_Decreto_146.pdf",
+      "tam": 6052206
+    },
+    {
+      "id": 170,
+      "ext": "pdf",
+      "nombre": "Decreto 283 Reglamento Ley Seguridad Social",
+      "archivo": "170_Decreto 283 Reglamento Ley Seguridad Social.pdf",
+      "url": "/docs/170_Decreto 283 Reglamento Ley Seguridad Social.pdf",
+      "tam": 295840
+    },
+    {
+      "id": 310,
+      "ext": "doc",
+      "nombre": "DPEC_hasta_2015",
+      "archivo": "310_DPEC_hasta_2015.doc",
+      "url": "/docs/310_DPEC_hasta_2015.doc",
+      "tam": 895488
+    },
+    {
+      "id": 322,
+      "ext": "doc",
+      "nombre": "Evaluación de trabajadores",
+      "archivo": "322_Evaluación de trabajadores.doc",
+      "url": "/docs/322_Evaluación de trabajadores.doc",
+      "tam": 112640
+    },
+    {
+      "id": 291,
+      "ext": "doc",
+      "nombre": "Ficha para De Merito",
+      "archivo": "291_Ficha_para_De_Merito.doc",
+      "url": "/docs/291_Ficha_para_De_Merito.doc",
+      "tam": 34816
+    },
+    {
+      "id": 292,
+      "ext": "doc",
+      "nombre": "Ficha para Honoris",
+      "archivo": "292_Ficha_para_Honoris.doc",
+      "url": "/docs/292_Ficha_para_Honoris.doc",
+      "tam": 34816
+    },
+    {
+      "id": 293,
+      "ext": "doc",
+      "nombre": "Ficha para Sellos Cujae",
+      "archivo": "293_Ficha_para_Sellos_Cujae.doc",
+      "url": "/docs/293_Ficha_para_Sellos_Cujae.doc",
+      "tam": 34816
+    },
+    {
+      "id": 284,
+      "ext": "doc",
+      "nombre": "FRANK PAIS DE SEGUNDO GRADO hasta 2015",
+      "archivo": "284_FRANK_PAIS_DE_SEGUNDO_GRADO_hasta_2015.doc",
+      "url": "/docs/284_FRANK_PAIS_DE_SEGUNDO_GRADO_hasta_2015.doc",
+      "tam": 284672
+    },
+    {
+      "id": 285,
+      "ext": "doc",
+      "nombre": "FRANK PAIS PRIMER GRADO hasta 2015",
+      "archivo": "285_FRANK_PAIS_PRIMER_GRADO_hasta_2015.doc",
+      "url": "/docs/285_FRANK_PAIS_PRIMER_GRADO_hasta_2015.doc",
+      "tam": 130560
+    },
+    {
+      "id": 103,
+      "ext": "doc",
+      "nombre": "Hoja Resumen",
+      "archivo": "103_Hoja Resumen.doc",
+      "url": "/docs/103_Hoja Resumen.doc",
+      "tam": 44032
+    },
+    {
+      "id": 223,
+      "ext": "pdf",
+      "nombre": "Instrucción de los modelos de Pago",
+      "archivo": "223_Instrucción de los modelos de Pago.pdf",
+      "url": "/docs/223_Instrucción de los modelos de Pago.pdf",
+      "tam": 25507
+    },
+    {
+      "id": 321,
+      "ext": "pdf",
+      "nombre": "Manual de funcionamiento interno CUJAE definitivo",
+      "archivo": "321_Manual de funcionamiento interno CUJAE definitivo.pdf",
+      "url": "/docs/321_Manual de funcionamiento interno CUJAE definitivo.pdf",
+      "tam": 1742148
+    },
+    {
+      "id": 286,
+      "ext": "doc",
+      "nombre": "MEDALLA JOSE TEY hasta 2015",
+      "archivo": "286_MEDALLA_JOSE_TEY_hasta_2015.doc",
+      "url": "/docs/286_MEDALLA_JOSE_TEY_hasta_2015.doc",
+      "tam": 615424
+    },
+    {
+      "id": 256,
+      "ext": "doc",
+      "nombre": "Modelo de Censo de Equipos de Proteccion Personal",
+      "archivo": "256_Modelo de Censo de Equipos de Proteccion Personal.doc",
+      "url": "/docs/256_Modelo de Censo de Equipos de Proteccion Personal.doc",
+      "tam": 47104
+    },
+    {
+      "id": 175,
+      "ext": "pdf",
+      "nombre": "Modelo de Certificación de firmas autorizadas para PC-10 y Pre-Nóminas",
+      "archivo": "175_Modelo de Certificación de firmas autorizadas para PC-10 y Pre-Nóminas.pdf",
+      "url": "/docs/175_Modelo de Certificación de firmas autorizadas para PC-10 y Pre-Nóminas.pdf",
+      "tam": 29298
+    },
+    {
+      "id": 199,
+      "ext": "doc",
+      "nombre": "Modelo de Comité de Expertos",
+      "archivo": "199_Modelo de Comité de Expertos.doc",
+      "url": "/docs/199_Modelo de Comité de Expertos.doc",
+      "tam": 26624
+    },
+    {
+      "id": 196,
+      "ext": "pdf",
+      "nombre": "Modelo de inhabilitación de salario",
+      "archivo": "196_Modelo de inhabilitación de salario.pdf",
+      "url": "/docs/196_Modelo de inhabilitación de salario.pdf",
+      "tam": 98789
+    },
+    {
+      "id": 183,
+      "ext": "doc",
+      "nombre": "Modelo de instrucción a trabajadores",
+      "archivo": "183_Modelo de instrucción a trabajadores.doc",
+      "url": "/docs/183_Modelo de instrucción a trabajadores.doc",
+      "tam": 59904
+    },
+    {
+      "id": 156,
+      "ext": "rar",
+      "nombre": "Modelo de solicitud de contratación de profesores adjuntos",
+      "archivo": "156_Modelo de solicitud de contratación de profesores adjuntos.rar",
+      "url": "/docs/156_Modelo de solicitud de contratación de profesores adjuntos.rar",
+      "tam": 1201106
+    },
+    {
+      "id": 257,
+      "ext": "xls",
+      "nombre": "Modelo Inventario de extintores",
+      "archivo": "257_Modelo Inventario de extintores.xls",
+      "url": "/docs/257_Modelo Inventario de extintores.xls",
+      "tam": 18944
+    },
+    {
+      "id": 181,
+      "ext": "doc",
+      "nombre": "Modelo para evaluación de investigadores",
+      "archivo": "181_Modelo para evaluación de investigadores.doc",
+      "url": "/docs/181_Modelo para evaluación de investigadores.doc",
+      "tam": 24576
+    },
+    {
+      "id": 325,
+      "ext": "doc",
+      "nombre": "Modelo proposiciones firma Ministro",
+      "archivo": "325_Modelo proposiciones firma Ministro.doc",
+      "url": "/docs/325_Modelo proposiciones firma Ministro.doc",
+      "tam": 72704
+    },
+    {
+      "id": 324,
+      "ext": "doc",
+      "nombre": "Modelo proposiciones firma Viceministra",
+      "archivo": "324_Modelo proposiciones firma Viceministra.doc",
+      "url": "/docs/324_Modelo proposiciones firma Viceministra.doc",
+      "tam": 73216
+    },
+    {
+      "id": 282,
+      "ext": "doc",
+      "nombre": "Modelo_de_Conclusiones_del_tribunal",
+      "archivo": "282_Modelo_de_Conclusiones_del_tribunal.doc",
+      "url": "/docs/282_Modelo_de_Conclusiones_del_tribunal.doc",
+      "tam": 114176
+    },
+    {
+      "id": 104,
+      "ext": "pdf",
+      "nombre": "Notificación de vacaciones, deducciones, licencias y subsidios",
+      "archivo": "104_Notificación de vacaciones, deducciones, licencias y subsidios.pdf",
+      "url": "/docs/104_Notificación de vacaciones, deducciones, licencias y subsidios.pdf",
+      "tam": 46041
+    },
+    {
+      "id": 277,
+      "ext": "doc",
+      "nombre": "NUEVO MODELO CHEQUEO MEDICO PERIODICO ESPECIALIZADO",
+      "archivo": "277_NUEVO_MODELO_CHEQUEO_MEDICO_PERIODICO_ESPECIALIZADO.doc",
+      "url": "/docs/277_NUEVO_MODELO_CHEQUEO_MEDICO_PERIODICO_ESPECIALIZADO.doc",
+      "tam": 60928
+    },
+    {
+      "id": 278,
+      "ext": "pdf",
+      "nombre": "NUEVO_MODELO_CHEQUEO_MEDICO_PRE_EMPLEO",
+      "archivo": "278_NUEVO_MODELO_CHEQUEO_MEDICO_PRE_EMPLEO.pdf",
+      "url": "/docs/278_NUEVO_MODELO_CHEQUEO_MEDICO_PRE_EMPLEO.pdf",
+      "tam": 125030
+    },
+    {
+      "id": 317,
+      "ext": "xlsx",
+      "nombre": "Parametros_para_evaluar_los_indicadores_de_la_estimulacion",
+      "archivo": "317_Parametros_para_evaluar_los_indicadores_de_la_estimulacion.xlsx",
+      "url": "/docs/317_Parametros_para_evaluar_los_indicadores_de_la_estimulacion.xlsx",
+      "tam": 18932
+    },
+    {
+      "id": 167,
+      "ext": "doc",
+      "nombre": "Plan de Acción",
+      "archivo": "167_Plan de Acción.doc",
+      "url": "/docs/167_Plan de Acción.doc",
+      "tam": 35328
+    },
+    {
+      "id": 280,
+      "ext": "doc",
+      "nombre": "Planilla solicitud y control de categorias",
+      "archivo": "280_Planilla_solicitud_y_control_de_categorias.doc",
+      "url": "/docs/280_Planilla_solicitud_y_control_de_categorias.doc",
+      "tam": 91136
+    },
+    {
+      "id": 294,
+      "ext": "docx",
+      "nombre": "Profesores con Categorias Especiales",
+      "archivo": "294_Profesores_con_Categorias_Especiales.docx",
+      "url": "/docs/294_Profesores_con_Categorias_Especiales.docx",
+      "tam": 27030
+    },
+    {
+      "id": 40,
+      "ext": "doc",
+      "nombre": "Propuesta de Movimiento",
+      "archivo": "040_Propuesta de Movimiento.doc",
+      "url": "/docs/040_Propuesta de Movimiento.doc",
+      "tam": 48128
+    },
+    {
+      "id": 41,
+      "ext": "pdf",
+      "nombre": "Registro de Asistencia",
+      "archivo": "041_Registro de Asistencia.pdf",
+      "url": "/docs/041_Registro de Asistencia.pdf",
+      "tam": 35802
+    },
+    {
+      "id": 279,
+      "ext": "rar",
+      "nombre": "Reglamento de categoría docente Resolución 86-2016",
+      "archivo": "279_Reglamento de categoría docente Resolución 86-2016.rar",
+      "url": "/docs/279_Reglamento de categoría docente Resolución 86-2016.rar",
+      "tam": 90582
+    },
+    {
+      "id": 320,
+      "ext": "pdf",
+      "nombre": "REGLAMENTO ORGANICO CUJAE definitivo",
+      "archivo": "320_REGLAMENTO ORGANICO CUJAE definitivo.pdf",
+      "url": "/docs/320_REGLAMENTO ORGANICO CUJAE definitivo.pdf",
+      "tam": 567417
+    },
+    {
+      "id": 229,
+      "ext": "pdf",
+      "nombre": "Reglamento_de_incentivos_2016",
+      "archivo": "229_Reglamento_de_incentivos_2016.pdf",
+      "url": "/docs/229_Reglamento_de_incentivos_2016.pdf",
+      "tam": 425305
+    },
+    {
+      "id": 297,
+      "ext": "rar",
+      "nombre": "Reglamento_diciplinario_ramal",
+      "archivo": "297_Reglamento_diciplinario_ramal.rar",
+      "url": "/docs/297_Reglamento_diciplinario_ramal.rar",
+      "tam": 603809
+    },
+    {
+      "id": 313,
+      "ext": "pdf",
+      "nombre": "Reglamento_disciplinario_interno",
+      "archivo": "313_Reglamento_disciplinario_interno.pdf",
+      "url": "/docs/313_Reglamento_disciplinario_interno.pdf",
+      "tam": 44463
+    },
+    {
+      "id": 314,
+      "ext": "pdf",
+      "nombre": "REGLAMENTO_DISCIPLINARIO_INTERNO_RESOLUCIÓN_RECTORAL 181-A 2015",
+      "archivo": "314_REGLAMENTO_DISCIPLINARIO_INTERNO_RESOLUCIÓN_RECTORAL 181-A 2015.pdf",
+      "url": "/docs/314_REGLAMENTO_DISCIPLINARIO_INTERNO_RESOLUCIÓN_RECTORAL 181-A 2015.pdf",
+      "tam": 131404
+    },
+    {
+      "id": 117,
+      "ext": "doc",
+      "nombre": "Reporte de vinculación",
+      "archivo": "117_Reporte de vinculación.doc",
+      "url": "/docs/117_Reporte de vinculación.doc",
+      "tam": 31232
+    },
+    {
+      "id": 318,
+      "ext": "pdf",
+      "nombre": "RESOLUCION No. 9-2016 MODIFICATIVA RESOLUCION No. 31-2013 SSISTEMA SALARIAL MES",
+      "archivo": "318_RESOLUCION No. 9-2016 MODIFICATIVA RESOLUCION No. 31-2013 SSISTEMA SALARIAL MES.pdf",
+      "url": "/docs/318_RESOLUCION No. 9-2016 MODIFICATIVA RESOLUCION No. 31-2013 SSISTEMA SALARIAL MES.pdf",
+      "tam": 68159
+    },
+    {
+      "id": 288,
+      "ext": "docx",
+      "nombre": "RESUMEN DE LOS REQUISITOS A CUMPLIMENTAR POR CADA CONDECORACION",
+      "archivo": "288_RESUMEN_DE_LOS_REQUISITOS_A_CUMPLIMENTAR_POR_CADA_CONDECORACION.docx",
+      "url": "/docs/288_RESUMEN_DE_LOS_REQUISITOS_A_CUMPLIMENTAR_POR_CADA_CONDECORACION.docx",
+      "tam": 16116
+    },
+    {
+      "id": 304,
+      "ext": "ppt",
+      "nombre": "Semana Nacional de Prevención contra incendios",
+      "archivo": "304_Semana Nacional de Prevención contra incendios.ppt",
+      "url": "/docs/304_Semana Nacional de Prevención contra incendios.ppt",
+      "tam": 75264
+    },
+    {
+      "id": 305,
+      "ext": "pptx",
+      "nombre": "seminario_pago",
+      "archivo": "305_seminario_pago.pptx",
+      "url": "/docs/305_seminario_pago.pptx",
+      "tam": 13525671
+    },
+    {
+      "id": 316,
+      "ext": "docx",
+      "nombre": "Sistema_sostenible_de_trabajo_para_prevenir_las_enfermedades.2016-2017",
+      "archivo": "316_Sistema_sostenible_de_trabajo_para_prevenir_las_enfermedades.2016-2017.docx",
+      "url": "/docs/316_Sistema_sostenible_de_trabajo_para_prevenir_las_enfermedades.2016-2017.docx",
+      "tam": 84673
+    },
+    {
+      "id": 44,
+      "ext": "doc",
+      "nombre": "Solicitud de descanso retribuido",
+      "archivo": "044_Solicitud de descanso retribuido.doc",
+      "url": "/docs/044_Solicitud de descanso retribuido.doc",
+      "tam": 30208
+    },
+    {
+      "id": 48,
+      "ext": "pdf",
+      "nombre": "Solicitud de Empleo",
+      "archivo": "048_Solicitud de Empleo.pdf",
+      "url": "/docs/048_Solicitud de Empleo.pdf",
+      "tam": 22959
+    },
+    {
+      "id": 45,
+      "ext": "pdf",
+      "nombre": "Solicitud de pago adicional a profesores de plantilla en tareas de Universalización",
+      "archivo": "045_Solicitud de pago adicional a profesores de plantilla en tareas de Universalización.pdf",
+      "url": "/docs/045_Solicitud de pago adicional a profesores de plantilla en tareas de Universalización.pdf",
+      "tam": 9352
+    },
+    {
+      "id": 302,
+      "ext": "pdf",
+      "nombre": "Sustancias químicas y peligrosas",
+      "archivo": "302_Sustancias químicas y peligrosas.pdf",
+      "url": "/docs/302_Sustancias químicas y peligrosas.pdf",
+      "tam": 898796
+    }
+  ]
+}
