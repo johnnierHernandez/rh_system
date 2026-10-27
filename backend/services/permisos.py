@@ -100,6 +100,18 @@ PERFILES_BASE: list[dict] = [
         "prioridad": 30,
     },
     {
+        "codigo": "director_rh",
+        "nombre": "Director de Recursos Humanos",
+        "descripcion": (
+            "Director de Recursos Humanos. Consulta en modo de solo lectura "
+            "los reportes que exigen autenticación —plantilla, nóminas, tarifa "
+            "horaria, recién graduados y S.C.D.— de todas las áreas, además "
+            "del resto de datos de negocio."
+        ),
+        "permisos": ["negocio.ver"],
+        "prioridad": 25,
+    },
+    {
         "codigo": "alta_direccion",
         "nombre": "Alta Dirección",
         "descripcion": (
