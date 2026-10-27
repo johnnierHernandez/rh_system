@@ -815,11 +815,22 @@ def _guardar_reportes_metadata(areas: list[dict]) -> None:
 
 
 @app.get("/api/reportes/areas")
-def get_reportes_areas() -> dict:
+def get_reportes_areas(sesion: dict = Depends(exigir_sesion)) -> dict:
+    """Catálogo de áreas de reporte, acotado al ámbito del usuario.
+
+    Dejó de ser público: exige sesión y solo devuelve las áreas a las que el
+    usuario tiene acceso, para que el desplegable de los reportes no enseñe
+    ámbitos ajenos ni sus cifras. El volcado `reportes.json` sigue guardando
+    el listado completo (se usa como caché server-side, no se sirve).
+    """
     areas = service.areas_reporte()
-    areas = [a for a in areas]
     _guardar_reportes_metadata(areas)
-    return {"areas": areas}
+    carnet = sesion.get("carnet_identidad") or ""
+    ids = usuario_areas_repo.ids_de(carnet)
+    visibles = [
+        a for a in areas if puede_acceder_area(sesion, int(a["id"]), ids)
+    ]
+    return {"areas": visibles}
 
 
 def _pdf_response(area_id: str, filename: str) -> StreamingResponse:
@@ -915,6 +926,20 @@ def get_tarifa_horaria_admin(
         return service.tarifa_horaria_admin(ano, mes, area)
     except TarifaHorariaNoEncontrada as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@app.get("/api/tarifa-horaria/areas")
+def get_tarifa_areas_admin(
+    _sesion: dict = Depends(exigir_permiso("tarifa_horaria.gestionar")),
+) -> dict:
+    """Catálogo completo de áreas para la pantalla de gestión de tarifa.
+
+    Esta gestión no se filtra por ámbito (su consulta exige únicamente
+    `tarifa_horaria.gestionar`, sin `puede_acceder_area`), así que su
+    desplegable necesita el listado completo, a diferencia del acotado de
+    `/api/reportes/areas`, que sí limita cada visitante a sus áreas.
+    """
+    return {"areas": service.areas_reporte()}
 
 
 @app.get("/api/tarifa-horaria/periodos", response_model=PeriodosTarifa)

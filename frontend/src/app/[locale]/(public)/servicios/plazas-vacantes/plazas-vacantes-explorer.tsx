@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 
+import RequiereSesion from "@/components/common/RequiereSesion";
+
 type Area = { id: number; nombre: string };
 type Plaza = {
   Plaza: number | null;
@@ -42,15 +44,33 @@ export default function PlazasVacantesExplorer() {
   const [datos, setDatos] = useState<Respuesta | null>(null);
   const [cargando, setCargando] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [sinSesion, setSinSesion] = useState(false);
 
   useEffect(() => {
+    // /api/reportes/areas exige sesión: responde 401 a un anónimo (las plazas
+    // vacantes son de acceso restringido) y, con sesión, solo devuelve las
+    // áreas que el usuario puede ver.
     fetch("/api/reportes/areas", { cache: "no-store" })
-      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((r) => {
+        if (r.status === 401) {
+          setSinSesion(true);
+          return null;
+        }
+        if (!r.ok) throw new Error();
+        return r.json();
+      })
       .then((d) => {
+        if (!d) return;
         const mapa = new Map<number, Area>(
           ((d.areas ?? []) as Area[]).map((a) => [a.id, a]),
         );
-        setAreas(ORDEN_AREAS.map((id) => mapa.get(id)).filter((a): a is Area => Boolean(a)));
+        const ordenadas = ORDEN_AREAS.map((id) => mapa.get(id)).filter(
+          (a): a is Area => Boolean(a),
+        );
+        setAreas(ordenadas);
+        // El catálogo ya viene acotado al visitante: para un jefe de área
+        // contiene solo su área, que queda preseleccionada por defecto.
+        if (ordenadas.length > 0) setAreaId(String(ordenadas[0].id));
       })
       .catch(() => setError("No se pudieron cargar las áreas de reportes."))
       .finally(() => setCargandoAreas(false));
@@ -103,6 +123,12 @@ export default function PlazasVacantesExplorer() {
       otros: suma("Otros"),
     };
   }, [datos]);
+
+  if (sinSesion) {
+    return (
+      <RequiereSesion mensaje="Las plazas vacantes son de acceso restringido. Inicia sesión con tu usuario institucional para consultarlas." />
+    );
+  }
 
   return (
     <div className="flex flex-col gap-6">

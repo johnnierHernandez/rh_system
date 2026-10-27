@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 
+import RequiereSesion from "@/components/common/RequiereSesion";
 import { ORDEN_AREAS, type AreaReporte } from "@/lib/areas-reporte";
 
 type Area = AreaReporte;
@@ -21,11 +22,23 @@ export default function ReportePdfExplorer({
   const [cargando, setCargando] = useState(true);
   const [areaId, setAreaId] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [sinSesion, setSinSesion] = useState(false);
 
   useEffect(() => {
+    // /api/reportes/areas exige sesión: responde 401 a un anónimo (el PDF de
+    // S.C.D. es de acceso restringido) y, con sesión, solo devuelve las áreas
+    // que el usuario puede ver.
     fetch("/api/reportes/areas", { cache: "no-store" })
-      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((r) => {
+        if (r.status === 401) {
+          setSinSesion(true);
+          return null;
+        }
+        if (!r.ok) throw new Error();
+        return r.json();
+      })
       .then((d) => {
+        if (!d) return;
         const mapa = new Map<number, Area>(
           ((d.areas ?? []) as Area[]).map((a) => [a.id, a]),
         );
@@ -33,12 +46,21 @@ export default function ReportePdfExplorer({
           (a): a is Area => Boolean(a),
         );
         setAreas(ordenadas);
+        // El catálogo ya viene acotado al visitante: para un jefe de área
+        // contiene solo su área, que queda preseleccionada por defecto.
+        if (ordenadas.length > 0) setAreaId(String(ordenadas[0].id));
       })
       .catch(() => setError("No se pudieron cargar las áreas de reportes."))
       .finally(() => setCargando(false));
   }, []);
 
   const pdfUrl = areaId ? `/api/reportes/${pdfBase}?area=${areaId}` : null;
+
+  if (sinSesion) {
+    return (
+      <RequiereSesion mensaje="Este reporte PDF es de acceso restringido. Inicia sesión con tu usuario institucional para consultarlo." />
+    );
+  }
 
   return (
     <div className="flex flex-col gap-6">

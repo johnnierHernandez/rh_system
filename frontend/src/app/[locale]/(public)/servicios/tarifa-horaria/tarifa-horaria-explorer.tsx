@@ -57,17 +57,26 @@ export default function TarifaHorariaExplorer() {
   const [sinSesion, setSinSesion] = useState(false);
 
   useEffect(() => {
-    // /api/mi/areas responde 401 a un anónimo: la tarifa horaria es de
-    // acceso restringido, así que sin sesión se ofrece el enlace de acceso.
-    fetch("/api/mi/areas", { cache: "no-store" })
-      .then((r) => {
-        if (r.status === 401) setSinSesion(true);
-      })
-      .catch(() => undefined);
-
+    // /api/reportes/areas exige sesión: responde 401 a un anónimo (la tarifa
+    // horaria es de acceso restringido) y, con sesión, solo devuelve las áreas
+    // que el usuario puede ver.
     fetch("/api/reportes/areas", { cache: "no-store" })
-      .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then((d) => setAreas(ordenarAreas((d.areas ?? []) as AreaReporte[])))
+      .then((r) => {
+        if (r.status === 401) {
+          setSinSesion(true);
+          return null;
+        }
+        if (!r.ok) throw new Error();
+        return r.json();
+      })
+      .then((d) => {
+        if (!d) return;
+        const ordenadas = ordenarAreas((d.areas ?? []) as AreaReporte[]);
+        setAreas(ordenadas);
+        // El catálogo ya viene acotado al visitante: para un jefe de área
+        // contiene solo su área, que queda preseleccionada por defecto.
+        if (ordenadas.length > 0) setAreaId(String(ordenadas[0].id));
+      })
       .catch(() => setError("No se pudieron cargar las áreas de reportes."))
       .finally(() => setCargandoAreas(false));
   }, []);

@@ -77,9 +77,15 @@ async function pedir<T>(url: string, init?: RequestInit): Promise<T> {
   return (await r.json()) as T;
 }
 
-/** Áreas con las que se puede filtrar el reporte de tarifa horaria. */
+/**
+ * Áreas con las que se puede filtrar el reporte de tarifa horaria.
+ *
+ * Usa el catálogo de gestión (completo): esta pantalla no se limita por
+ * ámbito, a diferencia de `/api/reportes/areas`, que sí se acota al visitante.
+ */
 export async function areasReporte(): Promise<AreaReporte[]> {
-  const d = (await pedir<{ areas?: AreaReporte[] }>("/api/reportes/areas")) ?? {};
+  const d =
+    (await pedir<{ areas?: AreaReporte[] }>("/api/tarifa-horaria/areas")) ?? {};
   return d.areas ?? [];
 }
 
