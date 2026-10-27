@@ -701,8 +701,26 @@ def get_trabajadores_por_area(area_id: str) -> list[Trabajador]:
 
 
 @app.get("/api/plantilla/areas", response_model=PlantillaAreas)
-def get_plantilla_areas() -> PlantillaAreas:
-    return service.plantilla_areas()
+def get_plantilla_areas(sesion: dict = Depends(exigir_sesion)) -> PlantillaAreas:
+    """Catálogo de áreas con sus conteos de plazas, acotado al ámbito.
+
+    Dejó de ser público: los conteos por área no se filtran a visitantes
+    anónimos (exigen sesión) y solo se devuelven las áreas a las que el
+    usuario tiene acceso, para que el selector no enseñe ámbitos ajenos ni
+    sus cifras.
+    """
+    datos = service.plantilla_areas()
+    carnet = sesion.get("carnet_identidad") or ""
+    ids = usuario_areas_repo.ids_de(carnet)
+    areas = [a for a in datos.areas if puede_acceder_area(sesion, a.id, ids)]
+    total = sum(a.total for a in areas)
+    vacantes = sum(a.vacantes for a in areas)
+    return PlantillaAreas(
+        total=total,
+        cubiertas=total - vacantes,
+        vacantes=vacantes,
+        areas=areas,
+    )
 
 
 def _area_o_404(area_id: str) -> dict:

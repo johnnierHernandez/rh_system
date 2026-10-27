@@ -51,10 +51,23 @@ export default function PlantillaExplorer() {
   const [total, setTotal] = useState(0);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  // La sesión se sondea antes de pintar nada: hasta saber si hay sesión no se
+  // muestra el selector ni los conteos de plazas (que salen de un endpoint
+  // público y no deben verse sin autenticarse).
+  const [sesionVerificada, setSesionVerificada] = useState(false);
   const [sinSesion, setSinSesion] = useState(false);
 
   useEffect(() => {
     let vivo = true;
+    fetch("/api/mi/areas", { cache: "no-store" })
+      .then((r) => {
+        if (!vivo) return;
+        if (r.status === 401) setSinSesion(true);
+        setSesionVerificada(true);
+      })
+      .catch(() => {
+        if (vivo) setSesionVerificada(true);
+      });
     (async () => {
       try {
         const r = await fetch("/api/plantilla/areas", { cache: "no-store" });
@@ -86,12 +99,11 @@ export default function PlantillaExplorer() {
         area,
       });
       const r = await fetch(`/api/plantilla?${q}`, { cache: "no-store" });
-      if (r.status === 401 || r.status === 403) {
+      if (r.status === 401) {
         setSinSesion(true);
         return;
       }
       if (!r.ok) throw new Error("fallo");
-      setSinSesion(false);
       setPlazas((await r.json()) as Plaza[]);
       setTotal(resumen?.areas.find((a) => String(a.id) === area)?.total ?? 0);
     } catch {
@@ -124,6 +136,21 @@ export default function PlantillaExplorer() {
   const sel = resumen?.areas.find((a) => String(a.id) === area);
   const cubiertasSel = sel ? sel.total - sel.vacantes : 0;
   const vacantesSel = sel ? sel.vacantes : 0;
+
+  // Sin sesión verificada aún: no se pinta nada (evita que se vea el
+  // selector o los conteos un instante antes de saber que no hay acceso).
+  if (!sesionVerificada) {
+    return (
+      <p className="mt-6 text-sm text-[#52525b]">Cargando…</p>
+    );
+  }
+
+  // Sin sesión: solo el aviso de acceso, nunca el selector ni los conteos.
+  if (sinSesion) {
+    return (
+      <RequiereSesion mensaje="La plantilla es de acceso restringido. Inicia sesión con tu usuario institucional para consultarla." />
+    );
+  }
 
   return (
     <div className="mt-6 space-y-5">
@@ -209,10 +236,6 @@ export default function PlantillaExplorer() {
         </p>
       )}
 
-      {sinSesion ? (
-        <RequiereSesion />
-      ) : (
-        <>
       <div className="overflow-x-auto rounded-xl border border-[#e5e7eb]">
         <table className="min-w-full text-sm">
           <thead className="bg-[#f4f6f4] text-left text-[#1a1a1a]">
@@ -304,8 +327,6 @@ export default function PlantillaExplorer() {
           </button>
         </div>
       </div>
-        </>
-      )}
     </div>
   );
 }
