@@ -51,6 +51,14 @@ class Cuadro(BaseModel):
     Desc_Cargo: str | None = None
     Id_Direccion: str | None = None
     Desc_Direccion: str | None = None
+    # Área de reporte a la que pertenece el `Id_Direccion` del cuadro. Solo se
+    # rellena en la vista de administración (importación de cuadros), para poder
+    # marcarlo como jefe de área y vincularlo de una vez.
+    area_id: int | None = None
+    # Estado en el portal (solo en la vista de administración): si ya tiene
+    # cuenta importada y si está marcado como jefe de área de su `area_id`.
+    en_portal: bool = False
+    es_jefe: bool = False
 
 
 class CuadroLista(BaseModel):
@@ -631,3 +639,74 @@ class PeriodosTarifa(BaseModel):
     """Histórico de períodos con horas registradas."""
 
     periodos: list[PeriodoTarifa] = Field(default_factory=list)
+
+
+# ---------------------------------------------------------------------------
+# Áreas por usuario (jefes de área y sus delegados)
+# ---------------------------------------------------------------------------
+
+
+class AreaAsignada(BaseModel):
+    """Un área de reporte autorizada para un usuario del portal."""
+
+    area_id: int
+    nombre: str | None = None
+    es_jefe: bool = False
+    otorgado_por: str | None = None
+    creado: datetime | None = None
+
+
+class AsignarAreaRequest(BaseModel):
+    """Vincula a un usuario con un área de reporte.
+
+    `es_jefe` marca al titular del área (el que puede designar delegados). Un
+    delegado entra con `es_jefe=false`, designado por el jefe.
+    """
+
+    area_id: int = Field(..., ge=1)
+    es_jefe: bool = False
+
+
+class DelegarAreaRequest(BaseModel):
+    """El jefe designa a una persona de su área como delegado.
+
+    `identificador` puede ser carné o usuario de internet; el sistema lo
+    resuelve en el LDAP y valida (regla de viajes) que sea de su área antes de
+    autorizarlo.
+    """
+
+    identificador: str = Field(..., min_length=1, max_length=128)
+    area_id: int = Field(..., ge=1)
+
+
+class CuadroImportado(BaseModel):
+    """Resultado de alta de un cuadro en el portal."""
+
+    carnet_identidad: str
+    area_id: int | None = None
+    area_nombre: str | None = None
+    es_jefe: bool = False
+    estado: str = "importado"
+
+
+class ImportarCuadrosRequest(BaseModel):
+    """Importa los cuadros activos al portal.
+
+    Si `solo_faltantes` es true solo da de alta los cuadros que aún no tienen
+    fila en `usuarios`; si no, resincroniza todos. `perfiles` es el perfil que
+    se les asigna a los recién importados (por defecto `jefe_area` si se marcan
+    como jefes, si no `invitado`).
+    """
+
+    solo_faltantes: bool = True
+    perfiles: list[str] = Field(default_factory=list, max_length=10)
+
+
+class ImportarCuadrosResponse(BaseModel):
+    """Resumen de la importación de cuadros."""
+
+    total_cuadros: int = 0
+    importados: int = 0
+    ya_existian: int = 0
+    errores: list[ImportarLoteError] = Field(default_factory=list)
+    resumen: str = ""

@@ -27,13 +27,20 @@ import pymssql
 
 from schemas import (
     Area,
+    AreaAsignada,
+    AsignarAreaRequest,
     CierreTarifa,
     CierreTarifaEntrada,
+    CuadroImportado,
     CuadroLista,
     Cumpleanos,
+    DelegarAreaRequest,
     Identidad,
     ActivarPerfilRequest,
     AsignarPerfilesRequest,
+    ImportarCuadrosRequest,
+    ImportarCuadrosResponse,
+    ImportarLoteError,
     ImportarLoteRequest,
     ImportarLoteResponse,
     ImportarUsuarioRequest,
@@ -88,6 +95,12 @@ from services.ldap_portal import (
     buscar_varias_personas,
 )
 from services.usuarios import UsuariosRepository
+from services.usuario_areas import UsuarioAreasRepository
+from services.autorizacion_areas import (
+    AreasRH,
+    area_de_unidad,
+    puede_acceder_area,
+)
 
 
 _cache_fotos: dict[str, tuple[bytes, str]] = {}
@@ -209,6 +222,7 @@ pool = _crear_pool()
 factory = RepositoryFactory(pool)
 service = DRHService(factory)
 usuarios_repo = UsuariosRepository()
+usuario_areas_repo = UsuarioAreasRepository()
 
 app = FastAPI(title="RH CUJAE API", version="1.0.0")
 
@@ -234,6 +248,11 @@ def _iniciar_portal() -> None:
         usuarios_repo.crear_tabla()
     except Exception as exc:  # noqa: BLE001
         print(f"[portal] no se pudo inicializar la tabla de usuarios: {exc}")
+    try:
+        usuario_areas_repo.crear_tabla()
+        print("[portal] tabla de áreas por usuario lista")
+    except Exception as exc:  # noqa: BLE001
+        print(f"[portal] no se pudo inicializar la tabla de áreas: {exc}")
     try:
         service.asegurar_tarifa()
         print("[tarifa] tabla de horas de tarifa horaria lista")
@@ -686,8 +705,56 @@ def get_plantilla_areas() -> PlantillaAreas:
     return service.plantilla_areas()
 
 
+def _area_o_404(area_id: str) -> dict:
+    area = service.area_reporte(area_id)
+    if not area:
+        raise HTTPException(status_code=404, detail="Área de reporte no encontrada")
+    return area
+
+
+def exigir_area_reporte(
+    area: str | None = Query(default=None, min_length=1, max_length=16),
+    sesion: dict = Depends(exigir_sesion),
+) -> dict:
+    """Autoriza consultar un área de reporte concreta.
+
+    Los reportes por área dejaron de ser públicos. Ahora exigen sesión y se
+    limitan al ámbito del perfil:
+    - `negocio.ver` (alta dirección, especialista RH) y `superadmin` ven
+      cualquier área, y también pueden omitir `area` (listado global).
+    - `area.ver` (jefes de área y sus delegados) ven solo las áreas asignadas
+      en `usuario_areas`; si omiten `area` no se les devuelve nada global, para
+      evitar una filtración de la plantilla completa.
+    """
+    carnet = sesion.get("carnet_identidad") or ""
+    es_global = puede_acceder_area(
+        sesion, -1, usuario_areas_repo.ids_de(carnet)
+    )  # -1 no existe: solo True si el perfil ve todo
+    if area is None:
+        if es_global:
+            return sesion
+        raise HTTPException(
+            status_code=403,
+            detail="Debe indicar un área concreta para consultar estos datos.",
+        )
+    area_obj = _area_o_404(area)
+    if not puede_acceder_area(
+        sesion, int(area_obj["id"]), usuario_areas_repo.ids_de(carnet)
+    ):
+        raise HTTPException(
+            status_code=403,
+            detail="No tiene acceso a esta área de reporte.",
+        )
+    return sesion
+
+
 @app.get("/api/plantilla", response_model=list[Plaza])
-def get_plantilla(limit: int = 500, offset: int = 0, area: str | None = None) -> list[Plaza]:
+def get_plantilla(
+    limit: int = 500,
+    offset: int = 0,
+    area: str | None = None,
+    _sesion: dict = Depends(exigir_area_reporte),
+) -> list[Plaza]:
     return service.plantilla(limit, offset, area)
 
 
@@ -737,13 +804,6 @@ def get_reportes_areas() -> dict:
     return {"areas": areas}
 
 
-def _area_o_404(area_id: str) -> dict:
-    area = service.area_reporte(area_id)
-    if not area:
-        raise HTTPException(status_code=404, detail="Área de reporte no encontrada")
-    return area
-
-
 def _pdf_response(area_id: str, filename: str) -> StreamingResponse:
     try:
         fh = open(filename, "rb")
@@ -763,13 +823,13 @@ def _pdf_response(area_id: str, filename: str) -> StreamingResponse:
 
 
 @app.get("/api/reportes/plazas_vacantes")
-def get_reporte_plazas_vacantes(area: str):
+def get_reporte_plazas_vacantes(area: str, _sesion: dict = Depends(exigir_area_reporte)):
     _area_o_404(area)
     return service.plazas_vacantes_area(area)
 
 
 @app.get("/api/reportes/prenomina")
-def get_prenomina(area: str):
+def get_prenomina(area: str, _sesion: dict = Depends(exigir_area_reporte)):
     _area_o_404(area)
     from services.pdf_reportes import generar_prenomina
     import tempfile
@@ -783,6 +843,7 @@ def get_tarifa_horaria(
     area: str,
     ano: int | None = Query(default=None, ge=2000, le=2100),
     mes: int | None = Query(default=None, ge=1, le=12),
+    _sesion: dict = Depends(exigir_area_reporte),
 ):
     _area_o_404(area)
     from services.pdf_reportes import generar_tarifa_horaria
@@ -808,11 +869,13 @@ def get_tarifa_horaria_lista(
     area: str,
     ano: int | None = Query(default=None, ge=2000, le=2100),
     mes: int | None = Query(default=None, ge=1, le=12),
+    _sesion: dict = Depends(exigir_area_reporte),
 ) -> TarifaHorariaRespuesta:
     """Horas de tarifa horaria insertadas para un área y un período.
 
-    Es la misma información que muestra el PDF oficial, así que la consulta
-    es pública, igual que el reporte. La escritura sí exige permiso.
+    Es la misma información que muestra el PDF oficial, así que comparte su
+    autorización: exige sesión y se limita al área asignada. La escritura sí
+    exige permiso de gestión.
     """
     _area_o_404(area)
     return service.tarifa_horaria_portal(area, ano, mes)
@@ -919,7 +982,7 @@ def borrar_tarifa_horaria(
 
 
 @app.get("/api/reportes/sobrecarga")
-def get_sobrecarga(area: str):
+def get_sobrecarga(area: str, _sesion: dict = Depends(exigir_area_reporte)):
     _area_o_404(area)
     from services.pdf_reportes import generar_sobrecarga
     import tempfile
@@ -929,7 +992,7 @@ def get_sobrecarga(area: str):
 
 
 @app.get("/api/recien_graduados", response_model=list[RecienGraduado])
-def get_recien_graduados(area: str):
+def get_recien_graduados(area: str, _sesion: dict = Depends(exigir_area_reporte)):
     """Adiestrados / recién graduados (contrato de adiestramiento) de un área."""
     _area_o_404(area)
     return service.recien_graduados(area)
@@ -1034,6 +1097,304 @@ def importar_usuarios_lote(
         resumen += f" No se pudieron importar {len(errores)}."
     return ImportarLoteResponse(
         importados=total, errores=errores, resumen=resumen
+    )
+
+
+# ---------------------------------------------------------------------------
+# Áreas por usuario (jefes de área y sus delegados)
+# ---------------------------------------------------------------------------
+
+
+def _nombre_area(area_id: int) -> str | None:
+    """Nombre visible de un área de reporte por su id."""
+    area = service.area_reporte(str(area_id))
+    return area.get("nombre") if area else None
+
+
+@app.get("/api/mi/areas", response_model=list[AreaAsignada])
+def get_mis_areas(sesion: dict = Depends(exigir_sesion)) -> list[AreaAsignada]:
+    """Áreas de reporte que la persona autenticada puede consultar.
+
+    Es lo que usa el frontend para decidir qué áreas mostrar en el selector
+    de reportes de un jefe o su delegado. Quien ve todo (RRHH, alta dirección,
+    superadmin) recibe la lista completa de áreas.
+    """
+    carnet = sesion.get("carnet_identidad") or ""
+    if puede_acceder_area(sesion, -1, set()):  # -1 no existe: True si ve todo
+        return [
+            AreaAsignada(area_id=int(a["id"]), nombre=a.get("nombre"), es_jefe=False)
+            for a in service.areas_reporte()
+        ]
+    filas = usuario_areas_repo.areas_de(carnet)
+    return [
+        AreaAsignada(
+            area_id=int(f["area_id"]),
+            nombre=_nombre_area(int(f["area_id"])),
+            es_jefe=bool(f.get("es_jefe")),
+            otorgado_por=f.get("otorgado_por"),
+            creado=f.get("creado"),
+        )
+        for f in filas
+    ]
+
+
+@app.get("/api/admin/usuarios/{carnet}/areas", response_model=list[AreaAsignada])
+def get_areas_usuario(
+    carnet: str, _admin: dict = Depends(exigir_admin)
+) -> list[AreaAsignada]:
+    """Áreas asignadas a un usuario, para la vista de administración."""
+    return [
+        AreaAsignada(
+            area_id=int(f["area_id"]),
+            nombre=_nombre_area(int(f["area_id"])),
+            es_jefe=bool(f.get("es_jefe")),
+            otorgado_por=f.get("otorgado_por"),
+            creado=f.get("creado"),
+        )
+        for f in usuario_areas_repo.areas_de(carnet)
+    ]
+
+
+@app.put("/api/admin/usuarios/{carnet}/areas", response_model=list[AreaAsignada])
+def asignar_area_usuario(
+    carnet: str,
+    body: AsignarAreaRequest,
+    _admin: dict = Depends(exigir_admin),
+) -> list[AreaAsignada]:
+    """Vincula a un usuario con un área de reporte (marcar jefe de área).
+
+    Es lo que hace el checkbox "Jefe de área" al importar un cuadro: el
+    administrador marca a la persona y aquí se guarda su vínculo con el área.
+    Si además tiene el perfil `jefe_area`, se le asigna para que pueda
+    designar delegados.
+    """
+    _area_o_404(str(body.area_id))
+    usuario_areas_repo.asignar(
+        carnet, int(body.area_id), es_jefe=bool(body.es_jefe)
+    )
+    if body.es_jefe and permisos.perfil_existe("jefe_area"):
+        usuarios_repo.aplicar_perfil(carnet, "jefe_area")
+    return get_areas_usuario(carnet, _admin)
+
+
+@app.delete("/api/admin/usuarios/{carnet}/areas/{area_id}", response_model=list[AreaAsignada])
+def quitar_area_usuario(
+    carnet: str,
+    area_id: int,
+    _admin: dict = Depends(exigir_admin),
+) -> list[AreaAsignada]:
+    """Quita el vínculo de un usuario con un área."""
+    usuario_areas_repo.quitar(carnet, int(area_id))
+    return get_areas_usuario(carnet, _admin)
+
+
+@app.post("/api/jefe/delegar", response_model=list[AreaAsignada])
+def delegar_area(
+    body: DelegarAreaRequest,
+    sesion: dict = Depends(exigir_permiso("area.autorizar")),
+) -> list[AreaAsignada]:
+    """El jefe designa a una persona de su área como delegado.
+
+    Regla tomada del sistema "viajes": antes de autorizar se comprueba, contra
+    la base de RRHH, que la persona designada pertenece al área del jefe o a un
+    área dependiente. Si no, se rechaza con 403. El delegado recibe el área sin
+    ser jefe (`es_jefe=false`), lo que le da `area.ver` pero no `area.autorizar`.
+    """
+    jefe_carnet = sesion.get("carnet_identidad") or ""
+    area_id = int(body.area_id)
+
+    if not usuario_areas_repo.es_jefe_de(jefe_carnet, area_id):
+        raise HTTPException(
+            status_code=403,
+            detail="Solo el jefe titular del área puede designar delegados.",
+        )
+
+    # Resolver la persona designada en el AD.
+    try:
+        persona, _ = buscar_varias_personas([body.identificador.strip()])
+    except LDAPNoDisponible as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    if not persona:
+        raise HTTPException(
+            status_code=404,
+            detail="No se encontró a la persona designada en el directorio.",
+        )
+    delegado = persona[0]
+    delegado_carnet = str(delegado.get("carnet_identidad") or "").strip()
+    if not delegado_carnet:
+        raise HTTPException(
+            status_code=422,
+            detail="La persona designada no tiene carné de identidad en el AD."
+        )
+    if delegado_carnet == jefe_carnet:
+        raise HTTPException(
+            status_code=422, detail="No puede designarse a sí mismo."
+        )
+
+    # Regla de viajes: el delegado debe ser del área (o subárea) del jefe.
+    areas_rh = AreasRH(factory.empleados())
+    ficha_jefe = areas_rh.ficha(jefe_carnet)
+    ficha_deleg = areas_rh.ficha(delegado_carnet)
+    if not areas_rh.es_misma_area_o_subarea(
+        ficha_jefe.get("Id_Direccion"), ficha_jefe.get("Desc_Direccion"),
+        ficha_deleg.get("Id_Direccion"), ficha_deleg.get("Desc_Direccion"),
+    ):
+        raise HTTPException(
+            status_code=403,
+            detail="La persona designada no pertenece a su área.",
+        )
+
+    # Guardar el delegado en el portal y vincularle el área.
+    usuarios_repo.sincronizar(delegado)
+    usuario_areas_repo.asignar(
+        delegado_carnet, area_id, es_jefe=False, otorgado_por=jefe_carnet
+    )
+    if permisos.perfil_existe("delegado_area"):
+        usuarios_repo.aplicar_perfil(delegado_carnet, "delegado_area")
+
+    return get_mis_areas(sesion)
+
+
+@app.get("/api/mi/delegados", response_model=list[dict])
+def get_mis_delegados(sesion: dict = Depends(exigir_permiso("area.autorizar"))) -> list[dict]:
+    """Personas que el jefe autenticado ha designado en sus áreas."""
+    jefe_carnet = sesion.get("carnet_identidad") or ""
+    salida: list[dict] = []
+    for area in usuario_areas_repo.areas_de(jefe_carnet):
+        if not area.get("es_jefe"):
+            continue
+        for d in usuario_areas_repo.delegados_de_area(int(area["area_id"])):
+            salida.append(
+                {
+                    "carnet_identidad": d.get("carnet_identidad"),
+                    "nombre": d.get("nombre"),
+                    "apellidos": d.get("apellidos"),
+                    "usuario_internet": d.get("usuario_internet"),
+                    "area_id": int(d.get("area_id")),
+                    "area_nombre": _nombre_area(int(d.get("area_id"))),
+                    "creado": d.get("creado"),
+                }
+            )
+    return salida
+
+
+@app.delete("/api/mi/delegados/{carnet}/{area_id}")
+def revocar_delegado(
+    carnet: str,
+    area_id: int,
+    sesion: dict = Depends(exigir_permiso("area.autorizar")),
+) -> dict:
+    """El jefe revoca la delegación a una persona de su área."""
+    jefe_carnet = sesion.get("carnet_identidad") or ""
+    if not usuario_areas_repo.es_jefe_de(jefe_carnet, int(area_id)):
+        raise HTTPException(
+            status_code=403,
+            detail="Solo el jefe titular del área puede revocar delegados.",
+        )
+    if not usuario_areas_repo.quitar(carnet, int(area_id)):
+        raise HTTPException(status_code=404, detail="Esa delegación no existe.")
+    return {"ok": True}
+
+
+@app.get("/api/admin/cuadros", response_model=CuadroLista)
+def get_cuadros_admin(
+    q: str = Query(default="", max_length=128),
+    id_direccion: str = Query(default="", max_length=24),
+    limit: int = Query(default=50, ge=1, le=500),
+    offset: int = Query(default=0, ge=0),
+    _admin: dict = Depends(exigir_admin),
+) -> CuadroLista:
+    """Cuadros activos con su estado en el portal (para la importación).
+
+    Además de los datos de RRHH, indica si la persona ya tiene fila en
+    `usuarios` y a qué área de reporte mapea su `Id_Direccion`, para que la
+    vista pueda marcar quién es jefe de área.
+    """
+    lista = service.cuadros(q, id_direccion, limit, offset)
+
+    # Cruzar con el portal en dos consultas globales (no una por cuadro):
+    # quién es jefe de área y quién ya tiene cuenta importada.
+    jefes = {f["carnet_identidad"]: int(f["area_id"]) for f in usuario_areas_repo.jefes()}
+    try:
+        en_portal = usuarios_repo.carnets_existentes(
+            [(c.No_CI or "").strip() for c in lista.items if (c.No_CI or "").strip()]
+        )
+    except Exception:  # noqa: BLE001 — el portal es PostgreSQL; si cae, no se tumba la lista
+        en_portal = set()
+
+    for item in lista.items:
+        carnet = (item.No_CI or "").strip()
+        unidad = (item.Id_Direccion or "").strip().upper()
+        area_id = area_de_unidad(unidad)
+        item.area_id = area_id
+        item.en_portal = carnet in en_portal
+        # Solo es jefe si está marcado justamente para esa área.
+        item.es_jefe = bool(area_id is not None and jefes.get(carnet) == area_id)
+    return lista
+
+
+@app.post("/api/admin/cuadros/importar", response_model=ImportarCuadrosResponse)
+def importar_cuadros(
+    body: ImportarCuadrosRequest, _admin: dict = Depends(exigir_admin)
+) -> ImportarCuadrosResponse:
+    """Da de alta los cuadros activos en el portal (cuentas LDAP).
+
+    Toma todos los cuadros activos (categoría 5) de RRHH, los busca en el AD
+    por carné y los importa a `usuarios` en un solo lote, para que puedan
+    autenticarse con su usuario y clave institucionales. `solo_faltantes`
+    evita resincronizar a los que ya tienen fila.
+
+    `perfiles` es el perfil que se asigna a los recién importados (opcional).
+    El área de cada cuadro no se guarda aquí: se asigna después, al marcarlo
+    como jefe de área desde la vista.
+    """
+    cuadros = service.cuadros_exportables()
+    carnets = [
+        (c.get("No_CI") or "").strip()
+        for c in cuadros
+        if (c.get("No_CI") or "").strip()
+    ]
+    # Quitar duplicados conservando el orden.
+    vistos: set[str] = set()
+    carnets_unicos = [c for c in carnets if not (c in vistos or vistos.add(c))]
+
+    if body.solo_faltantes:
+        existentes = {
+            c for c in carnets_unicos if usuarios_repo.obtener(c) is not None
+        }
+        a_buscar = [c for c in carnets_unicos if c not in existentes]
+    else:
+        a_buscar = carnets_unicos
+
+    perfil = None
+    if body.perfiles:
+        perfil = _validar_perfil(body.perfiles[0])
+
+    errores: list[ImportarLoteError] = []
+    importados = 0
+    if a_buscar:
+        try:
+            personas, errs = buscar_varias_personas(a_buscar)
+        except LDAPNoDisponible as exc:
+            raise HTTPException(status_code=503, detail=str(exc)) from exc
+        errores = [
+            ImportarLoteError(identificador=e["identificador"], motivo=e["motivo"])
+            for e in errs
+        ]
+        if personas:
+            filas = usuarios_repo.importar_varias(personas, perfil)
+            importados = len(filas)
+
+    resumen = (
+        f"Se importaron {importados} de {len(carnets_unicos)} cuadros "
+        f"({len(errores)} sin encontrar en el directorio)."
+    )
+    return ImportarCuadrosResponse(
+        total_cuadros=len(carnets_unicos),
+        importados=importados,
+        ya_existian=len(carnets_unicos) - len(a_buscar),
+        errores=errores,
+        resumen=resumen,
     )
 
 

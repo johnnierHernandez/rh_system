@@ -86,6 +86,12 @@ const navItems: NavItem[] = [
     permiso: "tarifa_horaria.gestionar",
   },
   {
+    icon: <GroupIcon />,
+    key: "misAreas",
+    path: "/portal/mis-areas",
+    permiso: "area.autorizar",
+  },
+  {
     key: "forms",
     icon: <ListIcon />,
     permiso: "negocio.ver",

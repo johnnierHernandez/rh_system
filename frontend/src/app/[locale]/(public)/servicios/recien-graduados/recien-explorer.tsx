@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import RequiereSesion from "@/components/common/RequiereSesion";
 
 type Area = { id: number; nombre: string };
 type Recien = {
@@ -26,8 +27,17 @@ export default function RecienGraduadosExplorer() {
   const [rows, setRows] = useState<Recien[]>([]);
   const [cargando, setCargando] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [sinSesion, setSinSesion] = useState(false);
 
   useEffect(() => {
+    // /api/mi/areas responde 401 a un anónimo: la lista de recién graduados
+    // (con CI) es de acceso restringido, así que sin sesión se pide acceder.
+    fetch("/api/mi/areas", { cache: "no-store" })
+      .then((r) => {
+        if (r.status === 401) setSinSesion(true);
+      })
+      .catch(() => undefined);
+
     fetch("/api/reportes/areas", { cache: "no-store" })
       .then((r) => (r.ok ? r.json() : Promise.reject()))
       .then((d) => {
@@ -67,6 +77,12 @@ export default function RecienGraduadosExplorer() {
       alive = false;
     };
   }, [areaId]);
+
+  if (sinSesion) {
+    return (
+      <RequiereSesion mensaje="La lista de recién graduados es de acceso restringido. Inicia sesión con tu usuario institucional para consultarla." />
+    );
+  }
 
   return (
     <div className="flex flex-col gap-6">

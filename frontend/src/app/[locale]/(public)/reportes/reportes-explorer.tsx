@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import RequiereSesion from "@/components/common/RequiereSesion";
 
 type Area = { id: number; nombre: string };
 
@@ -16,8 +17,18 @@ export default function ReportesExplorer() {
   const [cargando, setCargando] = useState(true);
   const [areaId, setAreaId] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [sinSesion, setSinSesion] = useState(false);
 
   useEffect(() => {
+    // Sondear la sesión: /api/mi/areas responde 401 a un visitante anónimo.
+    // El PDF de prenómina es de acceso restringido, así que sin sesión se
+    // ofrece el enlace de acceso en lugar de dejar el iframe en error.
+    fetch("/api/mi/areas", { cache: "no-store" })
+      .then((r) => {
+        if (r.status === 401) setSinSesion(true);
+      })
+      .catch(() => undefined);
+
     fetch("/api/reportes/areas", { cache: "no-store" })
       .then((r) => (r.ok ? r.json() : Promise.reject()))
       .then((d) => {
@@ -38,6 +49,12 @@ export default function ReportesExplorer() {
   const imprimir = () => {
     if (pdfUrl) window.open(pdfUrl, "_blank", "noopener,noreferrer");
   };
+
+  if (sinSesion) {
+    return (
+      <RequiereSesion mensaje="La prenómina es de acceso restringido. Inicia sesión con tu usuario institucional para consultarla." />
+    );
+  }
 
   return (
     <div className="flex flex-col gap-6">

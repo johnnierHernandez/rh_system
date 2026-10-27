@@ -20,7 +20,7 @@ const PAGINAS: Pagina[] = [
     permiso: "trabajadores.ver",
   },
   {
-    label: "Importar usuarios",
+    label: "Usuarios",
     keywords: ["usuarios", "importar", "ldap", "accesos", "cuentas", "perfiles"],
     href: "/portal/usuarios",
     permiso: "usuarios.administrar",

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import RequiereSesion from "@/components/common/RequiereSesion";
 
 type Area = { id: number; nombre: string; total: number; vacantes: number };
 type Resumen = { total: number; cubiertas: number; vacantes: number; areas: Area[] };
@@ -50,6 +51,7 @@ export default function PlantillaExplorer() {
   const [total, setTotal] = useState(0);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [sinSesion, setSinSesion] = useState(false);
 
   useEffect(() => {
     let vivo = true;
@@ -84,7 +86,12 @@ export default function PlantillaExplorer() {
         area,
       });
       const r = await fetch(`/api/plantilla?${q}`, { cache: "no-store" });
+      if (r.status === 401 || r.status === 403) {
+        setSinSesion(true);
+        return;
+      }
       if (!r.ok) throw new Error("fallo");
+      setSinSesion(false);
       setPlazas((await r.json()) as Plaza[]);
       setTotal(resumen?.areas.find((a) => String(a.id) === area)?.total ?? 0);
     } catch {
@@ -202,6 +209,10 @@ export default function PlantillaExplorer() {
         </p>
       )}
 
+      {sinSesion ? (
+        <RequiereSesion />
+      ) : (
+        <>
       <div className="overflow-x-auto rounded-xl border border-[#e5e7eb]">
         <table className="min-w-full text-sm">
           <thead className="bg-[#f4f6f4] text-left text-[#1a1a1a]">
@@ -293,6 +304,8 @@ export default function PlantillaExplorer() {
           </button>
         </div>
       </div>
+        </>
+      )}
     </div>
   );
 }

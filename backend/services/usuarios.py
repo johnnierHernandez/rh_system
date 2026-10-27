@@ -371,6 +371,24 @@ class UsuariosRepository:
                 cur.execute(f"SELECT COUNT(*) FROM usuarios {where}", params)
                 return int(cur.fetchone()[0])
 
+    def carnets_existentes(self, carnets: list[str]) -> set[str]:
+        """Subconjunto de carnés que ya tienen fila en `usuarios`.
+
+        Para pintar, de una sola consulta, qué cuadros ya están dados de alta
+        en el portal sin hacer una consulta por persona.
+        """
+        limpios = [c for c in carnets if c]
+        if not limpios:
+            return set()
+        with self._conn() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    "SELECT carnet_identidad FROM usuarios "
+                    "WHERE carnet_identidad = ANY(%s)",
+                    (limpios,),
+                )
+                return {str(r[0]) for r in cur.fetchall()}
+
     def obtener(self, carnet: str) -> dict | None:
         with self._conn() as conn:
             with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:

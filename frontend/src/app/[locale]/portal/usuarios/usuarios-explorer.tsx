@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import AvatarUsuario from "@/components/usuarios/avatar-usuario";
 import Badge from "@/components/ui/badge/Badge";
+import CuadrosImportador from "./cuadros-importador";
 
 /** Persona tal como la devuelve la búsqueda en el AD (aún sin importar). */
 type Persona = {
@@ -628,6 +629,9 @@ export default function UsuariosExplorer() {
           </div>
         )}
       </div>
+
+      {/* Importación de cuadros + jefes de área */}
+      <CuadrosImportador />
 
       {/* Usuarios importados */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">

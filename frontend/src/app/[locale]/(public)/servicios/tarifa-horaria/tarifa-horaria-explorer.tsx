@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 
+import RequiereSesion from "@/components/common/RequiereSesion";
 import { ordenarAreas, type AreaReporte } from "@/lib/areas-reporte";
 import {
   clavePeriodo,
@@ -53,8 +54,17 @@ export default function TarifaHorariaExplorer() {
   const [datos, setDatos] = useState<Respuesta | null>(null);
   const [cargando, setCargando] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [sinSesion, setSinSesion] = useState(false);
 
   useEffect(() => {
+    // /api/mi/areas responde 401 a un anónimo: la tarifa horaria es de
+    // acceso restringido, así que sin sesión se ofrece el enlace de acceso.
+    fetch("/api/mi/areas", { cache: "no-store" })
+      .then((r) => {
+        if (r.status === 401) setSinSesion(true);
+      })
+      .catch(() => undefined);
+
     fetch("/api/reportes/areas", { cache: "no-store" })
       .then((r) => (r.ok ? r.json() : Promise.reject()))
       .then((d) => setAreas(ordenarAreas((d.areas ?? []) as AreaReporte[])))
@@ -135,6 +145,12 @@ export default function TarifaHorariaExplorer() {
     areaId && ano !== null && mes !== null
       ? `/api/reportes/tarifa_horaria?area=${areaId}&ano=${ano}&mes=${mes}`
       : null;
+
+  if (sinSesion) {
+    return (
+      <RequiereSesion mensaje="La tarifa horaria es de acceso restringido. Inicia sesión con tu usuario institucional para consultarla." />
+    );
+  }
 
   return (
     <div className="flex flex-col gap-6">

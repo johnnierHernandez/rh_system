@@ -41,6 +41,16 @@ PERMISOS_VALIDOS: dict[str, str] = {
     "tarifa_horaria.gestionar": (
         "Insertar y modificar las horas de tarifa horaria de los trabajadores"
     ),
+    # Ámbito de área: no dan acceso global, sino a las áreas concretas que el
+    # usuario tenga asignadas en `usuario_areas`. Un jefe de área consulta sus
+    # reportes y designa delegados dentro de su propia área.
+    "area.ver": (
+        "Consultar plantilla, nóminas, tarifa horaria, recién graduados y S.C.D "
+        "de las áreas que tiene asignadas"
+    ),
+    "area.autorizar": (
+        "Designar a otras personas de su área para que consulten esos reportes"
+    ),
 }
 
 # Perfiles base del portal. `activo` permite desactivar un perfil sin borrar
@@ -98,6 +108,28 @@ PERFILES_BASE: list[dict] = [
         ),
         "permisos": ["negocio.ver"],
         "prioridad": 20,
+    },
+    {
+        "codigo": "jefe_area",
+        "nombre": "Jefe de Área",
+        "descripcion": (
+            "Jefe de una unidad organizativa. Consulta la plantilla, nóminas, "
+            "tarifa horaria, recién graduados y S.C.D. de su propio área, y "
+            "puede designar a otras personas de esa área para lo mismo."
+        ),
+        "permisos": ["area.ver", "area.autorizar"],
+        "prioridad": 15,
+    },
+    {
+        "codigo": "delegado_area",
+        "nombre": "Delegado de Área",
+        "descripcion": (
+            "Persona designada por un jefe de área. Consulta la plantilla, "
+            "nóminas, tarifa horaria, recién graduados y S.C.D. del área que "
+            "le fue asignada, sin poder designar a otros."
+        ),
+        "permisos": ["area.ver"],
+        "prioridad": 14,
     },
     {
         "codigo": "invitado",
